@@ -22,10 +22,18 @@ import matplotlib.pyplot as plt
 # 2. OOP interface
 # 3. mix of the first two
 
-def line_chart_example(x, y, filename):
+def line_chart_example(x, y, y2, filename):
     # x, y could be 1D lists, 
     # numpy arrays, pandas Series
-    plt.plot(x, y) 
+    plt.plot(x, y, label="Squared") 
+    plt.plot(x, y2, label="Cubed", color="red", lw=5)
+
+    # beautify our chart!!
+    plt.title("CPSC 222 First Chart :)")
+    plt.xlabel("X Values")
+    plt.ylabel("Y Values")
+    plt.grid(True)
+    plt.legend() # show a legend
 
     # need to "show()" the figure
     # or save the figure to a file
@@ -33,6 +41,15 @@ def line_chart_example(x, y, filename):
     #plt.show() 
     plt.savefig(filename)
 
+def scatter_chart_example(x, y, filename):
+    plt.figure() # creates a new "current" figure
+    plt.scatter(x, y, s=500, marker="x", color="green")
+    plt.savefig(filename)
+
+def bar_chart_example(x, y, filename):
+    plt.figure() # creates a new "current" figure
+    plt.bar(x, y)
+    plt.savefig(filename)
 
 def main():
     msrp_df = pd.read_csv("msrp.csv")
@@ -59,8 +76,13 @@ def main():
     # let's chart!!
     x = list(range(6)) # 0, 1, 2, 3, 4, 5
     y = []
+    y2 = []
     for val in x:
         y.append(val ** 2)
-    line_chart_example(x, y, "line_example.pdf") # call
+        y2.append(val ** 3)
+    line_chart_example(x, y, y2, "line_example.png") # call
+
+    scatter_chart_example(x, y, "scatter_example.png")
+    bar_chart_example(x, y, "bar_example.png")
 
 main()
