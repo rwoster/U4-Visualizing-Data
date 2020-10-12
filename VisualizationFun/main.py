@@ -61,7 +61,12 @@ def histogram_chart_example(x, filename):
     plt.hist(x, bins=30, facecolor="green", edgecolor="black")
     # let's add an annotation!! this supports data vis goal #3
     plt.annotate("mean: %.2f" %(np.mean(x)), xy=(105.0, 85.0))
-    plt.savefig(filename)
+
+    # GS 10/12: updating after class to change figure and axes color
+    # based on question asked in class
+    ax = plt.gca() # get current axes (associated with current figure)
+    ax.set_facecolor("gray")
+    plt.savefig(filename, facecolor="purple")
 
 def main():
     msrp_df = pd.read_csv("msrp.csv")
