@@ -51,6 +51,23 @@ def bar_chart_example(x, y, filename):
     plt.bar(x, y)
     plt.savefig(filename)
 
+def pie_chart_example(x, y, filename):
+    plt.figure() # creates a new "current" figure
+    plt.pie(y, labels=x, autopct="%1.2f%%")
+    plt.savefig(filename)
+
+def histogram_chart_example(x, filename):
+    plt.figure() # creates a new "current" figure
+    plt.hist(x, bins=30, facecolor="green", edgecolor="black")
+    # let's add an annotation!! this supports data vis goal #3
+    plt.annotate("mean: %.2f" %(np.mean(x)), xy=(105.0, 85.0))
+
+    # GS 10/12: updating after class to change figure and axes color
+    # based on question asked in class
+    ax = plt.gca() # get current axes (associated with current figure)
+    ax.set_facecolor("gray")
+    plt.savefig(filename, facecolor="purple")
+
 def main():
     msrp_df = pd.read_csv("msrp.csv")
     print(msrp_df)
@@ -84,5 +101,18 @@ def main():
 
     scatter_chart_example(x, y, "scatter_example.png")
     bar_chart_example(x, y, "bar_example.png")
+    # warmup 10/12
+    bar_chart_example(modelyear_counts_ser.index, modelyear_counts_ser, "modelyear_bar.png")
+    pie_chart_example(x, y, "pie_example.png")
+
+    # histogram example
+    # we need interesting data...
+    # lets create 1000 samples from a "normal" distribution
+    # (e.g. bell shaped)
+    mean = 100.0
+    stdev = 20.0
+    num_samples = 1000
+    random_data = np.random.normal(mean, stdev, num_samples)
+    histogram_chart_example(random_data, "histogram_example.png")
 
 main()
